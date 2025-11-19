@@ -1,0 +1,20 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "django==4.2.16",
+    "djangorestframework==3.15.2",
+    "psycopg2-binary>=2.9.11", # PostgreSQL database adapter
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "pre-commit>=4.3.0",
+    "pytest>=8.4.2",
+    "pytest-django>=4.11.1",
+    "ruff>=0.13.0",
+]
