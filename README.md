@@ -7,6 +7,8 @@
 - [기술 스택](#기술-스택)
 - [개발 도구](#개발-도구)
 - [빠른 시작](#빠른-시작-프로젝트-클론-후)
+- [환경변수 설정](#환경변수-설정)
+- [데이터베이스 설정](#데이터베이스-설정)
 - [Jira 협업 가이드](#jira-협업-가이드)
 - [프로젝트 구조](#프로젝트-구조)
 - [유용한 uv 명령어](#유용한-uv-명령어)
@@ -36,12 +38,12 @@
 ### 1. uv 설치
 
 #### macOS / Linux
-```
+```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 #### Windows (PowerShell)
-```
+```powershell
 # PowerShell 실행 정책 설정 (최초 1회)
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
@@ -50,12 +52,12 @@ irm https://astral.sh/uv/install.ps1 | iex
 ```
 
 #### macOS (Homebrew)
-```
+```bash
 brew install uv
 ```
 
 #### 설치 확인
-```
+```bash
 uv --version
 # 예상 출력: uv 0.9.x
 ```
@@ -63,7 +65,7 @@ uv --version
 ### 2. PATH 설정 (필요한 경우)
 
 #### Windows PowerShell
-```
+```powershell
 # 현재 세션에만 적용
 $env:Path = "C:\Users\SSAFY\.local\bin;$env:Path"
 
@@ -72,14 +74,14 @@ echo '$env:Path = "$env:USERPROFILE\.local\bin;$env:Path"' >> $PROFILE
 ```
 
 #### Git Bash (Windows)
-```
+```bash
 # ~/.bashrc 파일에 추가
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
 #### macOS / Linux
-```
+```bash
 # ~/.bashrc 또는 ~/.zshrc에 추가
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
@@ -87,7 +89,7 @@ source ~/.bashrc
 
 ### 3. 프로젝트 클론 및 의존성 설치
 
-```
+```bash
 # 레포 클론
 git clone https://github.com/mamy-myfamilyandme/backend.git
 cd backend
@@ -98,7 +100,7 @@ uv sync
 
 ### 4. 설치 확인
 
-```
+```bash
 # 설치된 패키지 확인
 uv pip list
 
@@ -106,7 +108,48 @@ uv pip list
 uv run python --version
 ```
 
-**끝!** 이제 바로 개발 시작하시면 됩니다.
+---
+
+## 환경변수 설정
+
+### 🔐 .env 파일 생성
+
+보안을 위해 SECRET_KEY와 데이터베이스 정보는 환경변수로 관리합니다.
+
+#### 1단계: .env 파일 생성
+
+프로젝트 루트 디렉토리(manage.py가 있는 위치)에 `.env` 파일을 생성하세요:
+
+```bash
+# Windows (Git Bash)
+touch .env
+
+# Windows (PowerShell)
+New-Item .env
+
+# macOS / Linux
+touch .env
+```
+
+#### 2단계: .env 파일 내용 작성
+
+`.env.example` 파일을 참고하여 다음 내용을 입력하세요:
+
+```env
+# Django Secret Key
+SECRET_KEY=your-secret-key-here
+
+# Django Settings
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# Database Settings
+DB_NAME=db
+DB_USER=admin
+DB_PASSWORD=1234
+DB_HOST=localhost
+DB_PORT=5432
+```
 
 ---
 
@@ -141,8 +184,6 @@ MAMY-124-fix-authentication-bug
 
 Jira를 거치지 않고 직접 브랜치를 생성할 때는 **반드시 이슈 키를 포함**해야 합니다.
 
-<img width="463" height="173" alt="이슈 키" src="https://github.com/user-attachments/assets/eb7cba73-726c-4162-91fc-22515a972a93" />
-
 **브랜치 네이밍 컨벤션:**
 ```
 <type>/<ISSUE-KEY>-<description>
@@ -157,7 +198,7 @@ Jira를 거치지 않고 직접 브랜치를 생성할 때는 **반드시 이슈
 - `test/`: 테스트 코드
 
 **예시:**
-```
+```bash
 git checkout -b feature/MAMY-123-child-vaccination-api
 git checkout -b bugfix/MAMY-124-fix-auth-token
 git checkout -b hotfix/MAMY-125-security-patch
@@ -182,7 +223,7 @@ git checkout -b refactor/MAMY-126-optimize-query
 - `perf`: 성능 개선
 
 **예시:**
-```
+```bash
 git commit -m "[MAMY-123] feat: 자녀 예방접종 API 엔드포인트 추가"
 git commit -m "[MAMY-124] fix: JWT 토큰 만료 처리 로직 수정"
 git commit -m "[MAMY-125] refactor: 데이터베이스 쿼리 최적화"
@@ -195,22 +236,22 @@ git commit -m "[MAMY-127] test: 회원가입 유닛 테스트 추가"
 커밋 메시지만으로 Jira 이슈를 업데이트할 수 있습니다.
 
 **댓글 추가:**
-```
+```bash
 git commit -m "[MAMY-123] feat: API 구현 완료 #comment 리뷰 요청드립니다"
 ```
 
 **작업 시간 기록:**
-```
+```bash
 git commit -m "[MAMY-124] fix: 버그 수정 #time 2h 30m"
 ```
 
 **이슈 상태 변경:**
-```
+```bash
 git commit -m "[MAMY-125] feat: 기능 완료 #done"
 ```
 
 **복합 사용:**
-```
+```bash
 git commit -m "[MAMY-126] feat: 알림 기능 구현 #time 3h #comment 푸시 알림 추가 완료 #done"
 ```
 
@@ -224,7 +265,7 @@ PR 제목에도 이슈 키를 포함합니다.
 ```
 
 **PR 본문 예시:**
-```
+```markdown
 ## 📝 작업 내용
 - 자녀 예방접종 기록 조회 API 구현
 - 접종 일정 알림 기능 추가
@@ -281,18 +322,31 @@ PR 제목에도 이슈 키를 포함합니다.
 
 ```
 backend/
+├── .env                    # 환경변수 (Git 추적 안 됨)
+├── .env.example            # 환경변수 템플릿
 ├── .gitignore
+├── .python-version
 ├── pyproject.toml          # 의존성 관리
 ├── uv.lock                 # 의존성 잠금 파일
 ├── README.md
-└── (Django 프로젝트는 나중에 생성)
+├── manage.py
+├── be/                     # Django 프로젝트 설정
+│   ├── __init__.py
+│   ├── settings.py         # Django 설정
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+└── scripts/
+    └── setup.sql           # 데이터베이스 초기 설정
 ```
 
 ---
 
 ## 유용한 uv 명령어
 
-```
+### 패키지 관리
+
+```bash
 # 패키지 추가
 uv add package-name
 
@@ -305,11 +359,31 @@ uv remove package-name
 # 의존성 동기화 (uv.lock 기반)
 uv sync
 
-# Python 명령 실행
-uv run python script.py
+# 설치된 패키지 목록 확인
+uv pip list
+```
 
-# Django 명령 실행 (Django 프로젝트 생성 후)
+### Django 명령어
+
+```bash
+# 개발 서버 실행
 uv run python manage.py runserver
-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-hf5jt5va)
-[16](https://community.latenode.com/t/how-to-link-an-existing-git-branch-to-a-jira-issue/12090)
-[17](https://support.atlassian.com/jira-cloud-administration/docs/use-the-github-for-jira-app/)
+
+# 마이그레이션 생성
+uv run python manage.py makemigrations
+
+# 마이그레이션 적용
+uv run python manage.py migrate
+
+# Django 설정 확인
+uv run python manage.py check
+
+# 슈퍼유저 생성
+uv run python manage.py createsuperuser
+
+# Django shell 실행
+uv run python manage.py shell
+
+# 테스트 실행
+uv run pytest
+```
