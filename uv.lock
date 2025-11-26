@@ -16,8 +16,11 @@ name = "backend"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "dj-rest-auth" },
     { name = "django" },
+    { name = "django-allauth" },
     { name = "djangorestframework" },
+    { name = "djangorestframework-simplejwt" },
     { name = "psycopg2-binary" },
     { name = "python-decouple" },
 ]
@@ -33,8 +36,11 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "dj-rest-auth", specifier = ">=7.0.1" },
     { name = "django", specifier = "==4.2.16" },
+    { name = "django-allauth", specifier = ">=65.13.1" },
     { name = "djangorestframework", specifier = "==3.15.2" },
+    { name = "djangorestframework-simplejwt", specifier = ">=5.5.1" },
     { name = "psycopg2-binary", specifier = ">=2.9.11" },
     { name = "python-decouple", specifier = ">=3.8" },
 ]
@@ -121,6 +127,16 @@ wheels = [
 ]
 
 [[package]]
+name = "dj-rest-auth"
+version = "7.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "djangorestframework" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b7/19/00150c8bedf7b6d4c44ecf7c2be9e58ae2203b42741ca734152d34f549f1/dj-rest-auth-7.0.1.tar.gz", hash = "sha256:3f8c744cbcf05355ff4bcbef0c8a63645da38e29a0fdef3c3332d4aced52fb90", size = 220541, upload-time = "2025-01-04T23:37:38.688Z" }
+
+[[package]]
 name = "django"
 version = "4.2.16"
 source = { registry = "https://pypi.org/simple" }
@@ -135,6 +151,19 @@ wheels = [
 ]
 
 [[package]]
+name = "django-allauth"
+version = "65.13.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "asgiref" },
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e0/b7/42a048ba1dedbb6b553f5376a6126b1c753c10c70d1edab8f94c560c8066/django_allauth-65.13.1.tar.gz", hash = "sha256:2af0d07812f8c1a8e3732feaabe6a9db5ecf3fad6b45b6a0f7fd825f656c5a15", size = 1983857, upload-time = "2025-11-20T16:34:40.811Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d8/98/9d44ae1468abfdb521d651fb67f914165c7812dfdd97be16190c9b1cc246/django_allauth-65.13.1-py3-none-any.whl", hash = "sha256:2887294beedfd108b4b52ebd182e0ed373deaeb927fc5a22f77bbde3174704a6", size = 1787349, upload-time = "2025-11-20T16:34:37.354Z" },
+]
+
+[[package]]
 name = "djangorestframework"
 version = "3.15.2"
 source = { registry = "https://pypi.org/simple" }
@@ -144,6 +173,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/2c/ce/31482eb688bdb4e271027076199e1aa8d02507e530b6d272ab8b4481557c/djangorestframework-3.15.2.tar.gz", hash = "sha256:36fe88cd2d6c6bec23dca9804bab2ba5517a8bb9d8f47ebc68981b56840107ad", size = 1067420, upload-time = "2024-06-19T07:59:32.891Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/7c/b6/fa99d8f05eff3a9310286ae84c4059b08c301ae4ab33ae32e46e8ef76491/djangorestframework-3.15.2-py3-none-any.whl", hash = "sha256:2b8871b062ba1aefc2de01f773875441a961fefbf79f5eed1e32b2f096944b20", size = 1071235, upload-time = "2024-06-19T07:59:26.106Z" },
+]
+
+[[package]]
+name = "djangorestframework-simplejwt"
+version = "5.5.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "djangorestframework" },
+    { name = "pyjwt" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a8/27/2874a325c11112066139769f7794afae238a07ce6adf96259f08fd37a9d7/djangorestframework_simplejwt-5.5.1.tar.gz", hash = "sha256:e72c5572f51d7803021288e2057afcbd03f17fe11d484096f40a460abc76e87f", size = 101265, upload-time = "2025-07-21T16:52:25.026Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/60/94/fdfb7b2f0b16cd3ed4d4171c55c1c07a2d1e3b106c5978c8ad0c15b4a48b/djangorestframework_simplejwt-5.5.1-py3-none-any.whl", hash = "sha256:2c30f3707053d384e9f315d11c2daccfcb548d4faa453111ca19a542b732e469", size = 107674, upload-time = "2025-07-21T16:52:07.493Z" },
 ]
 
 [[package]]
@@ -302,6 +345,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/b0/77/a5b8c569bf593b0140bde72ea885a803b82086995367bf2037de0159d924/pygments-2.19.2.tar.gz", hash = "sha256:636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887", size = 4968631, upload-time = "2025-06-21T13:39:12.283Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c7/21/705964c7812476f378728bdf590ca4b771ec72385c533964653c68e86bdc/pygments-2.19.2-py3-none-any.whl", hash = "sha256:86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b", size = 1225217, upload-time = "2025-06-21T13:39:07.939Z" },
+]
+
+[[package]]
+name = "pyjwt"
+version = "2.10.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e7/46/bd74733ff231675599650d3e47f361794b22ef3e3770998dda30d3b63726/pyjwt-2.10.1.tar.gz", hash = "sha256:3cc5772eb20009233caf06e9d8a0577824723b44e6648ee0a2aedb6cf9381953", size = 87785, upload-time = "2024-11-28T03:43:29.933Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/61/ad/689f02752eeec26aed679477e80e632ef1b682313be70793d798c1d5fc8f/PyJWT-2.10.1-py3-none-any.whl", hash = "sha256:dcdd193e30abefd5debf142f9adfcdd2b58004e644f25406ffaebd50bd98dacb", size = 22997, upload-time = "2024-11-28T03:43:27.893Z" },
 ]
 
 [[package]]

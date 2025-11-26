@@ -16,8 +16,17 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("<h1>로그인 성공! 메인 페이지입니다. 🚀</h1>")
 
 urlpatterns = [
+    path("", home),
     path("admin/", admin.site.urls),
+    path("api/auth/", include("dj_rest_auth.urls")),
+    path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
+    path("api/auth/", include("accounts.urls")),
+    path("accounts/", include("allauth.urls")),
 ]

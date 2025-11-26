@@ -40,7 +40,23 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",  # Required by allauth
+
+    # Third-party apps
+    "rest_framework",
+    "rest_framework.authtoken",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+
+    # Local apps
+    "accounts",
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -50,6 +66,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",  # Required by allauth
 ]
 
 ROOT_URLCONF = "be.urls"
@@ -78,12 +95,16 @@ WSGI_APPLICATION = "be.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DB_NAME"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST", default="localhost"),
-        "PORT": config("DB_PORT", default="5432", cast=int),
+        # "ENGINE": "django.db.backends.postgresql",
+        # "NAME": config("DB_NAME"),
+        # "USER": config("DB_USER"),
+        # "PASSWORD": config("DB_PASSWORD"),
+        # "HOST": config("DB_HOST", default="localhost"),
+        # "PORT": config("DB_PORT", default="5432", cast=int),
+
+        # sqlite3로 실험
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -128,3 +149,43 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# REST Framework Configuration
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+    ),
+}
+
+# dj-rest-auth Configuration
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = "access"
+JWT_AUTH_REFRESH_COOKIE = "refresh"
+
+# Allauth Configuration
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
+
+# Allauth Settings to silence warnings and configure login
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # 테스트용으로 이메일 인증 비활성화
+
+# 로그인/로그아웃 후 이동할 URL
+LOGIN_REDIRECT_URL = '/'  # 로그인 후 메인 페이지로 이동
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # 로그아웃 후 메인 페이지로 이동
