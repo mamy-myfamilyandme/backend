@@ -189,3 +189,6 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'  # 테스트용으로 이메일 인증 비�
 # 로그인/로그아웃 후 이동할 URL
 LOGIN_REDIRECT_URL = '/'  # 로그인 후 메인 페이지로 이동
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # 로그아웃 후 메인 페이지로 이동
+
+# 커스텀 유저 모델 사용 설정
+AUTH_USER_MODEL = 'accounts.User'
