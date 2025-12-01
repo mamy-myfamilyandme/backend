@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.naver",
 
     # Local apps
     "accounts",
@@ -74,7 +75,7 @@ ROOT_URLCONF = "be.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -177,6 +178,12 @@ SOCIALACCOUNT_PROVIDERS = {
         "AUTH_PARAMS": {
             "access_type": "online",
         },
+    },
+    "naver": {
+        "SCOPE": [
+            "name",
+            "email",
+        ],
     }
 }
 
@@ -187,7 +194,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'  # 테스트용으로 이메일 인증 비활성화
 
 # 로그인/로그아웃 후 이동할 URL
-LOGIN_REDIRECT_URL = '/'  # 로그인 후 메인 페이지로 이동
+LOGIN_REDIRECT_URL = '/dashboard/'  # 로그인 후 대시보드로 이동
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # 로그아웃 후 메인 페이지로 이동
 
 # 커스텀 유저 모델 사용 설정
