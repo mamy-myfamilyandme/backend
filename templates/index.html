@@ -15,5 +15,10 @@
         {% csrf_token %}
         <button type="submit">네이버 로그인</button>
     </form>
+    <br>
+    <form action="/accounts/kakao/login/" method="post">
+        {% csrf_token %}
+        <button type="submit">카카오 로그인</button>
+    </form>
 </body>
 </html>

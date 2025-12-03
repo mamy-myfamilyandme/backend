@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.naver",
+    "allauth.socialaccount.providers.kakao",
 
     # Local apps
     "accounts",
@@ -184,13 +185,19 @@ SOCIALACCOUNT_PROVIDERS = {
             "name",
             "email",
         ],
+    },
+    "kakao": {
+        "SCOPE": [
+            "profile_nickname",
+            # "account_email",  # 권한 문제로 주석 처리
+        ],
     }
 }
 
 # Allauth Settings to silence warnings and configure login
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = 'username'  # 이메일이 없을 수 있으므로 username으로 변경
 ACCOUNT_EMAIL_VERIFICATION = 'none'  # 테스트용으로 이메일 인증 비활성화
 
 # 로그인/로그아웃 후 이동할 URL
