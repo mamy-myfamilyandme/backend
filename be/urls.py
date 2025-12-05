@@ -20,8 +20,6 @@ from django.urls import path, include
 from .views import index, dashboard
 
 urlpatterns = [
-    path("", index, name="index"),
-    path("dashboard/", dashboard, name="dashboard"),
     path("admin/", admin.site.urls),
     path("api/auth/", include("dj_rest_auth.urls")),
     path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
